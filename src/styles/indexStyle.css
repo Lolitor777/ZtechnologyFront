@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;  
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgba(7, 98, 202, 0.775);
+}
+
+.container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.list_container {
+    width: 80%;
+    margin-top: 4em;
+    margin-bottom: 4em;
+    border: var(--first-color) 2px solid;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+
+
