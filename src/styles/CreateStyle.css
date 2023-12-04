@@ -13,7 +13,6 @@
 }
 
 .container_form {
-    border: black 2px solid;
     border: var(--first-color) 2px solid;
     width: 500px;
     margin: 4em auto;
@@ -24,6 +23,11 @@
     align-items: center;
     gap: 1em;
     border-radius: 6px;
+}
+
+.container_form_popup{
+    margin: 0;
+    border-radius: 0;
 }
 
 .title {
@@ -76,3 +80,69 @@
     background-color: var(--third-color); 
 }
 
+#profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+#profile > h3 {
+    font-size: 1.5rem;
+    color: #EFEFD0;
+    font-family: sans-serif
+}
+
+.profile_container{
+    width: 90%;
+    margin: 4em auto 6em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5em;
+}
+
+.profile_title{
+    font-size: 3rem;
+    color: rgb(12, 129, 179);
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.profile_container_child{
+    display: flex;
+    gap: 4em;
+}
+
+.profile_image {
+    width: 600px;
+    height: auto;
+    flex: 1;
+}
+
+.profile_img{
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile_info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    gap: 1em;
+}
+
+.profile_info > h3 {
+    font-family: sans-serif;
+    text-align: center;  
+    color: var(--first-color);
+    font-size: 1.5rem; 
+}
+
+.profile_info > h3 > span {
+    color: var(--second-color);
+    font-size: 1.5rem;
+}

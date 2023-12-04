@@ -14,7 +14,25 @@ export const fetchLogin = createAsyncThunk('auth/login', async(formData) => {
 
 export const fetchLogout = createAsyncThunk('auth/logout', async() => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_URL_SERVER}api/login/cerrar-sesion`, formData);
+        const response = await axios.post(`${import.meta.env.VITE_URL_SERVER}api/login/cerrar-sesion`, {}, {
+            headers:{
+                'x-token': Cookies.get('token')
+            }
+        });
+        Cookies.remove('token');
+        return response.data;
+    } catch (error) {
+        return isRejectedWithValue(error);
+    }
+})
+
+export const fetchValidateToken = createAsyncThunk('auth/validateToken', async() => {
+    try {
+        const response = await axios.post(`${import.meta.env.VITE_URL_SERVER}api/login/validate-sesion`, {}, {
+            headers:{
+                'x-token': Cookies.get('token')
+            }
+        });
         Cookies.remove('token');
         return response.data;
     } catch (error) {
@@ -51,6 +69,14 @@ const authSlice = createSlice({
             state.loading = false;
         })
         .addCase(fetchLogout.rejected, (state, action) => {
+            state.user = null;
+            state.loading = false;
+        })
+        .addCase(fetchValidateToken.fulfilled, (state, action) => {
+            state.user = action.payload.user;
+            state.loading = false;
+        })
+        .addCase(fetchValidateToken.rejected, (state, action) => {
             state.user = null;
             state.loading = false;
         })

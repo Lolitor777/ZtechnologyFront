@@ -9,7 +9,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: rgba(7, 98, 202, 0.775);
+    background-color: #0762cac6;
 }
 
 .container {
@@ -30,6 +30,16 @@ body::-webkit-scrollbar-thumb {
     border: var(--first-color) 2px solid;
     border-radius: 12px;
     overflow: hidden;
+}
+
+.graphic_container {
+    width: 90%;
+    margin: 4em auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4em;
 }
 
 

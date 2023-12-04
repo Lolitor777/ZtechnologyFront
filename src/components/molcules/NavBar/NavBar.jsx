@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import './NavBarStyle.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogout } from '@lib/slice/authSlice';
 
 
@@ -26,6 +26,7 @@ function NavBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,11 +47,22 @@ function NavBar() {
     if (typeSetting == 'Cerrar Sesión') {
       logout();
     }
+    else if (typeSetting == 'Perfil') {
+      navigate('/perfil')
+    }
   }
 
   const logout = () => {
     dispatch(fetchLogout());
-    navigate('/login');
+    navigate('/');
+  }
+
+
+  const nameProfile = (name) => {
+    let chain = name;
+    let firstLetter = chain[0].toUpperCase();
+    let nameUser = firstLetter.concat(chain.slice(1))
+    return nameUser
   }
 
   return (
@@ -145,9 +157,10 @@ function NavBar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box id="profile"  >
+          <h3>{nameProfile(user.names)}</h3>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>

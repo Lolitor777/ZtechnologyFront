@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,20 +11,18 @@ import { IconButton } from "@mui/material";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 
-const ListUser = ({load, setIdUpdate, setIdDelete}) => {
-  const [rows, setRows] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const user = useSelector(state => state.auth.user)
+const ListCustomer = ({load, setIdUpdate, setIdDelete}) => {
+  const [rows, setRows] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`${import.meta.env.VITE_URL_SERVER}api/user/consultar-usuarios`)
+            const response = await axios.get(`${import.meta.env.VITE_URL_SERVER}api/customer/consultar-clientes`)
             console.log(response);
-            setRows(response.data.user)
+            setRows(response.data.customer)
         }
 
     fetchData();
@@ -35,7 +33,7 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(event.target.value);
+    setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
@@ -54,12 +52,10 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="center"><b>Nombres</b></TableCell>
-                <TableCell align="center"><b>Nombre de usuario</b></TableCell>
-                <TableCell align="center"><b>Correo eletrónico</b></TableCell>
-                <TableCell align="center"><b>Contraseña</b></TableCell>
-                <TableCell align="center"><b>Rol</b></TableCell>
-                {user.id_rol == 1 && <TableCell align="center"><b>Acciones</b></TableCell>}
+                <TableCell><b>Nombre</b></TableCell>
+                <TableCell><b>Número de documento</b></TableCell>
+                <TableCell><b>Correo eletrónico</b></TableCell>
+                <TableCell><b>Acciones</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,12 +64,9 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
                 .map((row) => {
                   return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id} >
-                    <TableCell>{row.names}</TableCell>
-                    <TableCell>{row.nameUser}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.document_number}</TableCell>
                     <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.password}</TableCell>
-                    <TableCell>{row.role.name}</TableCell>
-                    {user.id_rol == 1 && 
                     <TableCell>
                       <IconButton color="primary" aria-label="Editar" onClick={() => {handleUpdate(row.id)}} >
                         <BorderColorIcon />
@@ -81,8 +74,7 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
                       <IconButton color="primary" aria-label="Eliminar" onClick={() => {handleDelete(row.id)}}>
                         <DeleteIcon />
                       </IconButton>
-                    </TableCell>}
-                    
+                    </TableCell>
                   </TableRow>
                   );
                   
@@ -104,4 +96,4 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
   );
 };
 
-export default ListUser;
+export default ListCustomer;

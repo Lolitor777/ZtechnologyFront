@@ -50,7 +50,10 @@ const CreateUser = (load, setLoad) => {
                 .email('Dirección de correo no valida'),
           password: Yup.string()
                 .required('Este campo es obligatorio')
-                .min(8, 'Digite por lo menos 8 caracteres')
+                .min(8, 'Digite por lo menos 8 caracteres'),
+          id_rol: Yup.string()
+                .required('Este campo es obligatorio')
+                .max(1, 'Digite 1 para Admin y 2 para gestor')
         })}
 
         onSubmit={async(values, { setSubmitting }) => {
@@ -66,18 +69,18 @@ const CreateUser = (load, setLoad) => {
           handleChange,
           handleBlur,
           handleSubmit,
-          isSubmitting,
+          isSubmitting, 
           /* and other goodies */
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="container_form">
-            <div className="title">
-              <h3 className="title_form">Crea un usuario</h3>
-              <AccountCircleIcon 
-              aria-label="icono de usuario"
-              sx={{ fontSize: 50 }}>
-              </AccountCircleIcon>
-            </div>            
+              <div className="title">
+                <h3 className="title_form">Crea un usuario</h3>
+                <AccountCircleIcon 
+                aria-label="icono de usuario"
+                sx={{ fontSize: 50 }}>
+                </AccountCircleIcon>
+              </div>            
                <TextField
                 className="names input"
                 id="names"
@@ -118,21 +121,17 @@ const CreateUser = (load, setLoad) => {
                 error={errors.password}
                 helperText={errors.password}
               />
-              <Box sx={{ maxWidth: 400 }} className="option_rol">
-                <FormControl fullWidth>
-                  <InputLabel variant="standard" htmlFor="uncontrolled-native">Rol</InputLabel>
-                  <NativeSelect
-                    defaultValue={20}
-                    inputProps={{
-                      name: "rol",
-                      id: "rol",
-                    }}
-                  >
-                    <option value={10}>Administrador</option>
-                    <option value={20}>Gestor</option>
-                  </NativeSelect>
-                </FormControl>
-              </Box>
+              <TextField
+                className="input"
+                id="id_rol"
+                name="id_rol"
+                label="Rol"
+                onChange={handleChange}
+                value={values.id_rol}
+                error={errors.id_rol}
+                helperText={errors.id_rol}
+              />
+              
               <div className="btn_container">
                 <Button type="submit" disabled={isSubmitting} id="submit">
                     Crear

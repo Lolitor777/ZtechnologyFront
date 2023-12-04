@@ -11,20 +11,17 @@ import { IconButton } from "@mui/material";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import { useSelector } from "react-redux";
 
-
-const ListUser = ({load, setIdUpdate, setIdDelete}) => {
+const ListQuote = ({load, setIdUpdate, setIdDelete}) => {
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const user = useSelector(state => state.auth.user)
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`${import.meta.env.VITE_URL_SERVER}api/user/consultar-usuarios`)
+            const response = await axios.get(`${import.meta.env. VITE_URL_SERVER}api/quote/consultar-cotizaciones`)
             console.log(response);
-            setRows(response.data.user)
+            setRows(response.data.quote)
         }
 
     fetchData();
@@ -54,12 +51,16 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="center"><b>Nombres</b></TableCell>
-                <TableCell align="center"><b>Nombre de usuario</b></TableCell>
-                <TableCell align="center"><b>Correo eletrónico</b></TableCell>
-                <TableCell align="center"><b>Contraseña</b></TableCell>
-                <TableCell align="center"><b>Rol</b></TableCell>
-                {user.id_rol == 1 && <TableCell align="center"><b>Acciones</b></TableCell>}
+                <TableCell align="center"><b>Numeración</b></TableCell>
+                <TableCell align="center"><b>Precio de envío</b></TableCell>
+                <TableCell align="center"><b>Cant. descuento</b></TableCell>
+                <TableCell align="center"><b>% de descuento</b></TableCell>
+                <TableCell align="center"><b>Sub total</b></TableCell>
+                <TableCell align="center"><b>Total</b></TableCell>
+                <TableCell align="center"><b>Producto</b></TableCell>
+                <TableCell align="center"><b>Usuario</b></TableCell>
+                <TableCell align="center"><b>Cliente</b></TableCell>
+                <TableCell align="center"><b>Acciones</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,12 +69,15 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
                 .map((row) => {
                   return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id} >
-                    <TableCell>{row.names}</TableCell>
-                    <TableCell>{row.nameUser}</TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.password}</TableCell>
-                    <TableCell>{row.role.name}</TableCell>
-                    {user.id_rol == 1 && 
+                    <TableCell align="center">{row.numeration}</TableCell>
+                    <TableCell align="center">{row.shipping_price}</TableCell>
+                    <TableCell align="center">{row.amount_discount}</TableCell>
+                    <TableCell align="center">{row.porcentage_discount}</TableCell>
+                    <TableCell align="center">{row.sub_total}</TableCell>
+                    <TableCell align="center">{row.total}</TableCell>
+                    <TableCell align="center">{row.product.description}</TableCell>
+                    <TableCell align="center">{row.user.names}</TableCell>
+                    <TableCell align="center">{row.customer.name}</TableCell>
                     <TableCell>
                       <IconButton color="primary" aria-label="Editar" onClick={() => {handleUpdate(row.id)}} >
                         <BorderColorIcon />
@@ -81,8 +85,7 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
                       <IconButton color="primary" aria-label="Eliminar" onClick={() => {handleDelete(row.id)}}>
                         <DeleteIcon />
                       </IconButton>
-                    </TableCell>}
-                    
+                    </TableCell>
                   </TableRow>
                   );
                   
@@ -104,4 +107,4 @@ const ListUser = ({load, setIdUpdate, setIdDelete}) => {
   );
 };
 
-export default ListUser;
+export default ListQuote;

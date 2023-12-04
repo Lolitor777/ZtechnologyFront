@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useState } from "react";
 import UpdateIcon from "@mui/icons-material/Update";
 
-export const UpdateUser = ({idUpdate, load, setLoad}) => {
+export const UpdateProduct = ({idUpdate, load, setLoad}) => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({});
 
@@ -19,8 +19,9 @@ export const UpdateUser = ({idUpdate, load, setLoad}) => {
   };
 
   const consultUserById = async (id) => {
-    const response = await axios.get(`${import.meta.env.VITE_URL_SERVER}api/user/consultar-usuario-por-id/${id}`);
-    setFormData(response.data.user);
+    const response = await axios.get(`${import.meta.env.VITE_URL_SERVER}api/product/consultar-producto-por-id/${id}`);
+    setFormData(response.data.product);
+    console.log('formdata', formData);
   };
 
   React.useEffect(() => {
@@ -31,7 +32,7 @@ export const UpdateUser = ({idUpdate, load, setLoad}) => {
   }, [idUpdate]);
 
   return (
-    <Dialog
+    <Dialog 
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
@@ -41,26 +42,24 @@ export const UpdateUser = ({idUpdate, load, setLoad}) => {
         enableReinitialize
         initialValues={{
           id: idUpdate,
-          names: formData.names || "",
-          nameUser: formData.nameUser || "",
-          email: formData.email || "",
-          rol: formData.id_rol || "",
+          type: formData.type || "",
+          description: formData.description || "",
+          price: formData.price || "",
+          amount: formData.amount || "",
         }}
         validationSchema={Yup.object({
-          names: Yup.string().required("Este campo es obligatorio"),
-          nameUser: Yup.string().required("Este campo es obligatorio"),
-          email: Yup.string()
+          type: Yup.string().required("Este campo es obligatorio"),
+          description: Yup.string().required("Este campo es obligatorio"),
+          price: Yup.number()
+            .required("Este campo es obligatorio"),
+          amount: Yup.number()
             .required("Este campo es obligatorio")
-            .email("Dirección de correo no valida"),
-          id_rol: Yup.string()
-            .required("Este campo es obligatorio")
-            .max(1, "Digite 1 para Admin y 2 para gestor"),
         })}
         onSubmit={async (values, { setSubmitting }) => {
           const response = await axios.put(
             `${
               import.meta.env.VITE_URL_SERVER
-            }api/user/modificar-datos-a-gestores`,
+            }api/product/modificar-producto`,
             values
           );
           setLoad(!load);
@@ -77,7 +76,7 @@ export const UpdateUser = ({idUpdate, load, setLoad}) => {
           <form onSubmit={handleSubmit}>
             <div className="container_form container_form_popup">
               <div className="title">
-                <h3 className="title_form">Actualización de usuario</h3>
+                <h3 className="title_form">Actualización de producto</h3>
                 <UpdateIcon
                   aria-label="Actualizar"
                   sx={{ fontSize: 50 }}
@@ -85,44 +84,44 @@ export const UpdateUser = ({idUpdate, load, setLoad}) => {
               </div>
 
               <TextField
-                className="names input"
-                id="names"
-                name="names"
-                label="Nombres"
+                className="input"
+                id="type"
+                name="type"
+                label="Tipo"
                 onChange={handleChange}
-                value={values.names}
-                error={errors.names}
-                helperText={errors.names}
-              />
-              <TextField
-                className="nameUser input"
-                id="nameUser"
-                name="nameUser"
-                label="Nombre de usuario"
-                onChange={handleChange}
-                value={values.nameUser}
-                error={errors.nameUser}
-                helperText={errors.nameUser}
-              />
-              <TextField
-                className="email input"
-                id="email"
-                name="email"
-                label="Correo eletrónico"
-                onChange={handleChange}
-                value={values.email}
-                error={errors.email}
-                helperText={errors.email}
+                value={values.type}
+                error={errors.type}
+                helperText={errors.type}
               />
               <TextField
                 className="input"
-                id="id_rol"
-                name="id_rol"
-                label="Rol"
+                id="description"
+                name="description"
+                label="Descripción"
                 onChange={handleChange}
-                value={values.id_rol}
-                error={errors.id_rol}
-                helperText={errors.id_rol}
+                value={values.description}
+                error={errors.description}
+                helperText={errors.description}
+              />
+              <TextField
+                className="input"
+                id="price"
+                name="price"
+                label="Precio"
+                onChange={handleChange}
+                value={values.price}
+                error={errors.price}
+                helperText={errors.price}
+              />
+              <TextField
+                className="input"
+                id="amount"
+                name="amount"
+                label="Cantidad"
+                onChange={handleChange}
+                value={values.amount}
+                error={errors.amount}
+                helperText={errors.amount}
               />
 
               <div className="btn_container">

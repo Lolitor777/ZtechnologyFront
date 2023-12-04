@@ -13,9 +13,9 @@ const Login = () => {
   const user = useSelector(state => state.auth.user)
   const loading = useSelector(state => state.auth.loading)
 
-  // if (loading) {
-  //   return <>Cargando...</>
-  // }
+  if (loading) {
+    return <>Cargando...</>
+  }
 
   if (user) {
     return navigate("/usuarios")
@@ -40,7 +40,7 @@ const Login = () => {
           onSubmit={async (values, { setSubmitting }) => {
             const response = await dispatch(fetchLogin(values));
             if(response.payload.user) {
-              return navigate("/usuarios")
+              return navigate("/grafica")
             }
           }}
         >
